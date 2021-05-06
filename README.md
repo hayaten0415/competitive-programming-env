@@ -8,23 +8,31 @@
 具体的には下記の言語のコンパイラ及び各種ツール一式がパックされており、ブラウザからコーディングできるようcode-serverを起動します。
 
 - C/C++ (GCC/Clang)
-- Python3
-- Rust
-- .NET
-- Java
-- Kotlin
-- Scala
 - [code-server](https://github.com/cdr/code-server)
 - [Online Judge Tools](https://github.com/online-judge-tools/oj)
-- [cargo-atcoder](https://github.com/tanakh/cargo-atcoder)
 
 
 ## 使い方
-
 ```bash
-docker run -d -p 8080:8080 hiromiayase/competitive-programming-env:0.1.0
+docker build -t hayaten . 
+docker run -d -p 8080:8080  \
+--mount type=bind,source="<このリポジトリをcloneしたフォルダ>/.local/share/code-server",target="/home/ubuntu/.local/share/code-server"  \
+hayaten
 ```
 上記のコマンドを起動した後、ブラウザで http://localhost:8080 にアクセスする。
+
+
+## 説明
+- VSCodeの設定ファイルが起動するたびに消えるのは不便なため、VSCodeの設定ファイルのみマウントした状態で
+Dockerを起動しています。
+- DockerでのVSCodeの設定フォルダに該当する部分のフォルダに対しこのリポジトリの.local/share/code-serverフォルダにマウントして起動します。
+- VSCodeの拡張機能はデフォルトで何も入っていないため、ブラウザのVSCodeから自分で拡張機能をインストールして下さい。
+
+## この使い方のメリット
+VSCodeに登録したスニペットやインストールした拡張機能が消えないこと。
+
+## この使い方のデメリット
+code-serverのログなど不要なファイルもマウント先のフォルダに溜まっていってしまいます。
 
 ## C++ による提出
 
@@ -45,25 +53,9 @@ g++ main.cpp && oj t
 [+] test success: 2 cases とでたら成功です。
 
 
-## Java による提出
-
-(ABC169)[https://atcoder.jp/contests/abc169/tasks/abc169_a] のコードがサンプルとして abc196_a_java にあります。まず、Ctrl+Shift+@ により abc196_a_java でターミナルを開きます。
-
-
-ターミナルが開いたら Online Judge Tools でテストケースをダウンロードします。
-```bash
-oj d https://atcoder.jp/contests/abc169/tasks/abc169_a
-```
-
-テストケースがダウンロードできたらコンパイルしテストしてみます。
-```bash
-javac Main.java && oj t -c "java Main"
-```
-C++と異なり、-C オプションによる実行コマンドの指定が必要です。
-
-[+] test success: 2 cases とでたら成功です。
+## 今後追加したい機能
+- ACL環境
 
 
-# その他
-
-iPad Proはもってませんが、ブラウザ上で動くのでiPadで競プロが出来るようになるかもしれません。誰か試してください。
+## 注意点
+- 筆者は自分の手元環境のUbuntu18.04OS環境でしか試しておりません。

@@ -1,15 +1,6 @@
 {
     "folders": [
         {
-            "path": "abc169_a_rust"
-        },
-        {
-            "path": "abc169_a_java"
-        },
-        {
-            "path": "abc169_a_python"
-        },
-        {
             "path": "abc169_a_cpp"
         }
     ],
